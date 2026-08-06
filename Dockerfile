@@ -15,6 +15,8 @@ WORKDIR /app
 COPY --from=build /app/publish .
 
 ENV ASPNETCORE_ENVIRONMENT=Production
+ENV DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
+ENV DOTNET_USE_POLLING_FILE_WATCHER=1
 EXPOSE 8080
 
 CMD ["sh", "-c", "dotnet SproutSignal.Web.dll --urls http://0.0.0.0:${PORT:-8080} --hostBuilder:reloadConfigOnChange=false"]
