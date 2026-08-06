@@ -1,0 +1,62 @@
+@page
+@model SproutSignal.Web.Pages.SaveGuestModel
+@{
+    ViewData["Title"] = "Save guest account";
+}
+
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        @if (Model.Saved)
+        {
+            <div class="text-center">
+                <h1 class="h2">Your account is saved</h1>
+                <p class="text-muted">
+                    You can now use <strong>@Model.SavedEmail</strong> and your password to sign in again.
+                    Your existing plants are still here.
+                </p>
+                <a asp-page="/Plants/Index" class="btn btn-success">Return to My Plants</a>
+            </div>
+        }
+        else
+        {
+            <h1>Save your guest account</h1>
+            <p class="text-muted mb-4">
+                Add login details to keep access to your plants after this guest session ends.
+            </p>
+
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Email" class="form-label"></label>
+                    <input asp-for="Input.Email" class="form-control" autocomplete="email" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Input.Password" class="form-label"></label>
+                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" />
+                    <div class="form-text">
+                        Use at least 6 characters with uppercase, lowercase, a number, and a symbol.
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Input.ConfirmPassword" class="form-label"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">Save account</button>
+                    <a asp-page="/Plants/Index" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -9,6 +9,7 @@
         @if (User.HasClaim("sproutsignal:guest", "true"))
         {
             <span class="nav-link text-dark">Browsing as guest</span>
+            <a class="nav-link text-success" asp-area="" asp-page="/SaveGuest">Save account</a>
         }
         else
         {
