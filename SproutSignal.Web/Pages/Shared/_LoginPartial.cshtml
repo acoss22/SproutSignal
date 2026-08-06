@@ -6,7 +6,14 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        @if (User.HasClaim("sproutsignal:guest", "true"))
+        {
+            <span class="nav-link text-dark">Browsing as guest</span>
+        }
+        else
+        {
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        }
     </li>
     <li class="nav-item">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
@@ -21,6 +28,11 @@ else
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </li>
+    <li class="nav-item">
+        <form method="post" asp-area="" asp-page="/Guest">
+            <button type="submit" class="nav-link btn btn-link text-success">Continue as guest</button>
+        </form>
     </li>
 }
 </ul>

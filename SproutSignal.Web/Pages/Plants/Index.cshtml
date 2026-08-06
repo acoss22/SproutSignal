@@ -1,0 +1,70 @@
+@page
+@model SproutSignal.Web.Pages.Plants.IndexModel
+@{
+    ViewData["Title"] = "My Plants";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="mb-1">My Plants</h1>
+        <p class="text-muted mb-0">
+            Keep track of your plants and their care routines.
+        </p>
+    </div>
+
+    <a asp-page="./Create" class="btn btn-success">
+        Add plant
+    </a>
+</div>
+
+@if (Model.Plants.Count == 0)
+{
+    <div class="border rounded-3 p-5 text-center">
+        <h2 class="h4">Your garden is empty</h2>
+
+        <p class="text-muted">
+            Add your first plant to start tracking its care.
+        </p>
+
+        <a asp-page="./Create" class="btn btn-success">
+            Add your first plant
+        </a>
+    </div>
+}
+else
+{
+    <div class="row g-4">
+        @foreach (var plant in Model.Plants)
+        {
+            <div class="col-12 col-md-6 col-xl-4">
+                <article class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h2 class="h5 card-title">@plant.Name</h2>
+
+                        @if (!string.IsNullOrWhiteSpace(plant.Species))
+                        {
+                            <p class="text-muted mb-3">@plant.Species</p>
+                        }
+
+                        <dl class="mb-0">
+                            <div class="mb-2">
+                                <dt class="fw-semibold">Location</dt>
+                                <dd class="mb-0">
+                                    @(plant.Location ?? "Not specified")
+                                </dd>
+                            </div>
+
+                            <div>
+                                <dt class="fw-semibold">Watering frequency</dt>
+                                <dd class="mb-0">
+                                    Every @plant.WateringIntervalDays
+                                    @(plant.WateringIntervalDays == 1 ? "day" : "days")
+                                </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </article>
+            </div>
+        }
+    </div>
+}
